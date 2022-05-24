@@ -1,38 +1,38 @@
-import { ethers } from "ethers";
+const { ethers } = require("ethers");
 
 // Function is later referenced with this name
-const harvestOnBalanceIncrease = async (context, event) => {
+const harvestOnBalanceIncreaseFn = async (context, event) => {
     const key = await context.secrets.get('TEND_KEY')
     // Log so we can later see what's available in payload
     console.log(event);
 
-    ropstenRpc = 'https://ropsten.infura.io/v3/'
+    ropstenRpc = 'https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'
 
-    const defaultProvider = new ethers.providers.JsonRpcProvider(
-		ropstenRpc
-	);
+    const provider = new ethers.providers.JsonRpcProvider(
+		  ropstenRpc, 3
+	  );
+    console.log("provide: ", provider)
 
-            // You can also use an ENS name for the contract address
-    const daiAddress = "dai.tokens.ethers.eth";
+    const  network = await provider.detectNetwork()
+    console.log(network)
 
-    
-    const erc20Abi = [
-    
-        "function name() view returns (string)",
-        "function symbol() view returns (string)",
-        "function balanceOf(address) view returns (uint)",
-        "function transfer(address to, uint amount)",
+    // Create a wallet instance
+    let wallet = new ethers.Wallet(key, provider)
 
-        // An event triggered whenever anyone transfers to someone else
-        "event Transfer(address indexed from, address indexed to, uint amount)"
-    ];
+    let tx = {
+        to: wallet.address,
+        // Convert currency unit from ether to wei
+        value: 0,
+        maxFeePerGas: 1000 *1e9,
+        maxPriorityFeePerGas: 1*1e9
+    }
 
-
-
-	
-
+    console.log(tx);
+    // Send a transaction
+    const res = await wallet.sendTransaction(tx);
+    console.log( res);
 
 
   };
   // Function must be exported
-  module.exports = { helloWorldFn };
+  module.exports = { harvestOnBalanceIncreaseFn };

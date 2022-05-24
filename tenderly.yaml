@@ -7,22 +7,47 @@ actions:
     sources: src
     specs:
       # The action name. Must be unique in the project.
-      helloWorldTransactions:
-        description: Transaction that produced HelloWorld on Web3Actions contract.
-        function: hello:helloWorldFn
+      # helloWorldTransactions:
+      #   description: Transaction that produced HelloWorld on Web3Actions contract.
+      #   function: hello:helloWorldFn
+      #   trigger:
+      #     type: transaction
+      #     transaction:
+      #       status:
+      #         # Listen to mined transactions stream
+      #         - mined
+      #       filters:
+      #         # Filter for transaction that match Ropsten network
+      #         - network: 3
+      #           # and produced event
+      #           eventEmitted:
+      #             contract:
+      #               # on this contract
+      #               address: 0xca5f355d158e7f38f58145c5e6f0c870b00e3cc7
+      #             # with HelloWorld name
+      #             name: HelloWorld
+      # ropstenSendTxTransactions:
+      #   description: Transaction that produced HelloWorld on Web3Actions contract.
+      #   function: harvest:harvestOnBalanceIncreaseFn
+      #   trigger:
+      #     type: transaction
+      #     transaction:
+      #       status:
+      #         # Listen to mined transactions stream
+      #         - mined
+      #       filters:
+      #         # Filter for transaction that match Ropsten network
+      #         - network: 3
+      #           # and produced event
+      #           eventEmitted:
+      #             contract:
+      #               # on this contract
+      #               address: 0xca5f355d158e7f38f58145c5e6f0c870b00e3cc7
+      #             # with HelloWorld name
+      #             name: HelloWorld
+      alertHarvestTransactions:
+        description: harvest our strategy when dai is > x
+        function: harvestFantom:harvestFantonFn
         trigger:
-          type: transaction
-          transaction:
-            status:
-              # Listen to mined transactions stream
-              - mined
-            filters:
-              # Filter for transaction that match Ropsten network
-              - network: 3
-                # and produced event
-                eventEmitted:
-                  contract:
-                    # on this contract
-                    address: 0xca5f355d158e7f38f58145c5e6f0c870b00e3cc7
-                  # with HelloWorld name
-                  name: HelloWorld
+          type: alert
+          alert: {}
